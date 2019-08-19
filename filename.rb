@@ -1,1 +1,1 @@
-some words
+some_words = "Some more words"
