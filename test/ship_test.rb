@@ -10,7 +10,7 @@ class ShipTest < Minitest::Test
 
   def test_ship_exists
 
-  assert_instance_of Ship, @cruiser
+    assert_instance_of Ship, @cruiser
   end
 
   def test_cruiser_has_name
@@ -20,38 +20,42 @@ class ShipTest < Minitest::Test
 
   def test_cruiser_has_length
 
-  assert_equal 3, cruiser.length
+    assert_equal 3, @cruiser.length
   end
 
   def test_cruiser_has_health
 
-  assert_equal 3, cruiser.health
+    assert_equal 3, @cruiser.health
   end
 
   def test_unhit_cruiser_sunk_boolean
 
-  assert_equal false, cruiser.sunk?
+    assert_equal false, @cruiser.sunk?
   end
 
   def test_cruiser_health_registers_first_hit
-  @cruiser.hit
+    @cruiser.hit
 
-  assert_equal 2, cruiser.health
+    assert_equal 2, @cruiser.health
   end
 
   def test_cruiser_health_registers_second_hit
-  @cruiser.hit
-  # might have to hit it twice if above test doesn't store new health value.
-  assert_equal 1, @cruiser.health
+    @cruiser.hit
+    @cruiser.hit
+
+    assert_equal 1, @cruiser.health
   end
 
   def test_cruiser_registers_not_sunk
 
-  assert_equal false, cruiser.sunk?
+    assert_equal false, @cruiser.sunk?
   end
 
   def test_cruiser_registers_sunk
-  @cruiser.hit
-  #might need to hit it three times if above tests don't store new health value.
-  assert_equal true, cruiser.sunk?
+    @cruiser.hit
+    @cruiser.hit
+    @cruiser.hit
+    
+    assert_equal true, @cruiser.sunk?
   end
+end
