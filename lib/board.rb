@@ -28,4 +28,8 @@ class Board
     @cells.include?(cell)
   end
 
+  def valid_placement?(ship, [coordinates]*)
+      
+  end
+
 end
