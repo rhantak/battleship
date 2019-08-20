@@ -55,8 +55,38 @@ class CellTest < Minitest::Test
     assert_equal  start_health - 1, @cell.ship.health
   end
 
-  def test_render
-    # Test .render including with the true argument
+  def test_render_doesnt_show_ship
+    @cell.place_ship(@cruiser)
+
+    assert_equal ".", @cell.render
+  end
+
+  def test_render_shows_ship
+    @cell.place_ship(@cruiser)
+
+    assert_equal "S", @cell.render(true)
+  end
+
+  def test_render_shows_miss
+    @cell.fire_upon
+
+    assert_equal "M", @cell.render
+  end
+
+  def test_render_shows_hit
+    @cell.place_ship(@cruiser)
+    @cell.fire_upon
+
+    assert_equal "H", @cell.render
+  end
+
+  def test_render_shows_sunk
+    @cell.place_ship(@cruiser)
+    @cell.fire_upon
+    @cell.fire_upon
+    @cell.fire_upon
+
+    assert_equal "X", @cell.render
   end
 
 end
