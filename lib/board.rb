@@ -1,7 +1,6 @@
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
-require 'pry'
 
 class Board
   def initialize()
@@ -26,22 +25,21 @@ class Board
   end
 
   def valid_coordinate?(cell)
-    @cells.values.flatten.map{|object| object.coordinate == cell}.include?(true)
+    @cells.keys.include?(cell)
   end
 
   def valid_placement?(ship, array)
     letters = array.map {|element| element[0]}
     numbers = array.map {|element| element[1]}
+    yrange = Range.new(letters.first,letters.last).count
     # Passed in array is horizontally consecutive and all letters are the same (placed on same row)
     if @cells.keys.each_cons(ship.length).any? {|a| a == array} && letters.uniq.count == 1
       true
     # Passed in array is vertically consecutive and all numbers are the same (placed in same column)
-    elsif #conditional
+    elsif (letters.uniq.count == array.count) && (numbers.uniq.count == 1) && (yrange == ship.length)
       true
     else
       false
     end
   end
-
-  #binding.pry
 end
