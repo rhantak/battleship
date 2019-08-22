@@ -38,9 +38,11 @@ class BoardTest < Minitest::Test
   def test_can_validate_ship_placement_doesnt_overlap
     @cruiser = Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2)
-    @board.cells["A3"].place_ship(@cruiser)
-    @board.cells["B3"].place_ship(@cruiser) 
-    @board.cells["C3"].place_ship(@cruiser)
+    # @board.cells["A3"].place_ship(@cruiser)
+    # @board.cells["B3"].place_ship(@cruiser)
+    # @board.cells["C3"].place_ship(@cruiser)
+    @board.place(@cruiser["A3", "B3", "C3"])
+
 
     assert_equal true, @board.valid_placement?(@submarine, ["A1", "A2"])
 
