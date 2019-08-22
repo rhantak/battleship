@@ -29,7 +29,7 @@ class Board
   end
 
   def valid_placement?(ship, array)
-    ship_is_placed_in_a_straight_line?(ship, array)
+    ship_is_placed_in_a_straight_line?(ship, array) && ship_isnt_placed_on_another_ship?(array)
   end
 
   def ship_is_placed_in_a_straight_line?(ship, array)
@@ -49,5 +49,8 @@ class Board
 
   def ship_isnt_placed_on_another_ship?(array)
     # make sure cell.ship is nil for all cells in placement array
+    array.all? do |element|
+      @cells[element].ship == nil
+    end
   end
 end
