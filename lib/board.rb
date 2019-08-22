@@ -29,6 +29,10 @@ class Board
   end
 
   def valid_placement?(ship, array)
+    ship_is_placed_in_a_straight_line?(ship, array)
+  end
+
+  def ship_is_placed_in_a_straight_line?(ship, array)
     letters = array.map {|element| element[0]}
     numbers = array.map {|element| element[1]}
     yrange = Range.new(letters.first,letters.last).count
@@ -41,5 +45,9 @@ class Board
     else
       false
     end
+  end
+
+  def ship_isnt_placed_on_another_ship?(array)
+    # make sure cell.ship is nil for all cells in placement array
   end
 end
