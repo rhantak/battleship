@@ -46,14 +46,14 @@ class BoardTest < Minitest::Test
     @board.place(@cruiser, ["A1", "A2", "A3"])
     @board.place(@submarine, ["B1", "B2"])
 
-    @board.render_board
+    assert_equal "        1   2   3   4\n    A   .   .   .   .\n    B   .   .   .   .\n    C   .   .   .   .\n    D   .   .   .   .\n", @board.render_board
   end
 
   def test_will_render_and_show_ships
     @board.place(@cruiser, ["A1", "A2", "A3"])
     @board.place(@submarine, ["B1", "B2"])
 
-  assert_equal  @board.render_board(true)
+    assert_equal "        1   2   3   4\n    A   S   S   S   .\n    B   S   S   .   .\n    C   .   .   .   .\n    D   .   .   .   .\n", @board.render_board(true)
   end
 
   def test_will_render_and_show_hits_misses_sunk
@@ -64,6 +64,7 @@ class BoardTest < Minitest::Test
     @board.cells["A3"].fire_upon
     @board.cells["A4"].fire_upon
 
-    assert_equal "rendered board", @board.render_board
+    assert_equal "        1   2   3   4\n    A   .   .   H   M\n    B   X   X   .   .\n    C   .   .   .   .\n    D   .   .   .   .\n", @board.render_board
   end
+
 end
