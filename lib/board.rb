@@ -35,8 +35,8 @@ class Board
   end
 
   def ship_is_placed_in_a_straight_line?(ship, array)
-    letters = array.map {|element| element[0]}
-    numbers = array.map {|element| element[1]}
+    letters = array.map {|coordinate| coordinate[0]}
+    numbers = array.map {|coordinate| coordinate[1]}
     yrange = Range.new(letters.first,letters.last).count
     # Passed in array is horizontally consecutive and all letters are the same (placed on same row)
     if @cells.keys.each_cons(ship.length).any? {|a| a == array} && letters.uniq.count == 1
@@ -51,14 +51,14 @@ class Board
 
   def ship_isnt_placed_on_another_ship?(array)
     # Make sure cell.ship is nil for all cells in placement array
-    array.all? do |element|
-      @cells[element].ship == nil
+    array.all? do |coordinate|
+      @cells[coordinate].ship == nil
     end
   end
 
   def place(ship, array)
-    array.each do |element|
-      @cells[element].place_ship(ship)
+    array.each do |coordinate|
+      @cells[coordinate].place_ship(ship)
     end
   end
 
@@ -69,5 +69,4 @@ class Board
     print "C   #{@cells["C1"].render(show)}   #{@cells["C2"].render(show)}   #{@cells["C3"].render(show)}   #{@cells["C4"].render(show)}\n"
     print "D   #{@cells["D1"].render(show)}   #{@cells["D2"].render(show)}   #{@cells["D3"].render(show)}   #{@cells["D4"].render(show)}\n"
   end
-  binding.pry
 end
