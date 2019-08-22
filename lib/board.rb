@@ -1,8 +1,10 @@
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
+require 'pry'
 
 class Board
+  attr_reader :cells
   def initialize()
     @cells = {
       "A1" => Cell.new("A1"),
@@ -29,8 +31,12 @@ class Board
   end
 
   def valid_placement?(ship, array)
-    letters = array.map {|element| element[0]}
-    numbers = array.map {|element| element[1]}
+    ship_is_placed_in_a_straight_line?(ship, array) && ship_isnt_placed_on_another_ship?(array)
+  end
+
+  def ship_is_placed_in_a_straight_line?(ship, array)
+    letters = array.map {|coordinate| coordinate[0]}
+    numbers = array.map {|coordinate| coordinate[1]}
     yrange = Range.new(letters.first,letters.last).count
     # Passed in array is horizontally consecutive and all letters are the same (placed on same row)
     if @cells.keys.each_cons(ship.length).any? {|a| a == array} && letters.uniq.count == 1
@@ -41,5 +47,26 @@ class Board
     else
       false
     end
+  end
+
+  def ship_isnt_placed_on_another_ship?(array)
+    # Make sure cell.ship is nil for all cells in placement array
+    array.all? do |coordinate|
+      @cells[coordinate].ship == nil
+    end
+  end
+
+  def place(ship, array)
+    array.each do |coordinate|
+      @cells[coordinate].place_ship(ship)
+    end
+  end
+
+  def render_board(show = false)
+    "\s \s \s \s 1   2   3   4\n\
+    A   #{@cells["A1"].render(show)}   #{@cells["A2"].render(show)}   #{@cells["A3"].render(show)}   #{@cells["A4"].render(show)}\n\
+    B   #{@cells["B1"].render(show)}   #{@cells["B2"].render(show)}   #{@cells["B3"].render(show)}   #{@cells["B4"].render(show)}\n\
+    C   #{@cells["C1"].render(show)}   #{@cells["C2"].render(show)}   #{@cells["C3"].render(show)}   #{@cells["C4"].render(show)}\n\
+    D   #{@cells["D1"].render(show)}   #{@cells["D2"].render(show)}   #{@cells["D3"].render(show)}   #{@cells["D4"].render(show)}\n"
   end
 end

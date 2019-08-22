@@ -1,7 +1,7 @@
 require './lib/ship.rb'
 require 'pry'
 class Cell
-  attr_reader :ship, :coordinate, :fired_upon
+  attr_reader :ship, :coordinate
 
   def initialize(coordinate)
     @ship = nil
@@ -22,27 +22,27 @@ class Cell
   end
 
   def fire_upon
-    if @ship != nil
+    if !empty?
       @ship.hit
     end
     @fired_upon = true
   end
 
   def render(show = false)
-    if fired_upon == false
-      if show == true && @ship != nil
-        p "S"
+    if @fired_upon == false
+      if show == true && !empty?
+         'S'
       else
-        p "."
+         '.'
       end
-    elsif fired_upon == true
-      if @ship == nil
-        p "M"
+    elsif @fired_upon == true
+      if empty?
+         'M'
       else
         if @ship.health > 0
-          p "H"
+           'H'
         elsif @ship.health <= 0
-          p "X"
+           'X'
         end
       end
     end
