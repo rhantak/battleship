@@ -36,9 +36,34 @@ class BoardTest < Minitest::Test
 
   def test_can_validate_ship_placement_doesnt_overlap
     @board.place(@cruiser, ["A3", "B3", "C3"])
-    
+
     assert_equal true, @board.valid_placement?(@submarine, ["A1", "A2"])
 
     refute @board.valid_placement?(@submarine, ["A2", "A3"])
+  end
+
+  def test_will_render_and_hide_ships
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    @board.place(@submarine, ["B1", "B2"])
+
+    @board.render_board
+  end
+
+  def test_will_render_and_show_ships
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    @board.place(@submarine, ["B1", "B2"])
+
+  assert_equal  @board.render_board(true)
+  end
+
+  def test_will_render_and_show_hits_misses_sunk
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    @board.place(@submarine, ["B1", "B2"])
+    @board.cells["B1"].fire_upon
+    @board.cells["B2"].fire_upon
+    @board.cells["A3"].fire_upon
+    @board.cells["A4"].fire_upon
+
+    assert_equal "rendered board", @board.render_board
   end
 end
