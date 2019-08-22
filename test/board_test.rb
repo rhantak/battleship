@@ -7,6 +7,8 @@ require 'minitest/pride'
 class BoardTest < Minitest::Test
   def setup
     @board = Board.new
+    @cruiser = Ship.new("Cruiser", 3)
+    @submarine = Ship.new("Submarine", 2)
   end
 
   def test_it_exists
@@ -19,9 +21,6 @@ class BoardTest < Minitest::Test
   end
 
   def test_can_validate_ship_placement_is_valid
-    @cruiser = Ship.new("Cruiser", 3)
-    @submarine = Ship.new("Submarine", 2)
-
     assert_equal true, @board.valid_placement?(@cruiser, ["A1", "A2", "A3"])
     assert_equal true, @board.valid_placement?(@submarine, ["A1", "A2"])
     assert_equal true, @board.valid_placement?(@cruiser, ["A1","B1","C1"])
@@ -36,14 +35,8 @@ class BoardTest < Minitest::Test
   end
 
   def test_can_validate_ship_placement_doesnt_overlap
-    @cruiser = Ship.new("Cruiser", 3)
-    @submarine = Ship.new("Submarine", 2)
-    # @board.cells["A3"].place_ship(@cruiser)
-    # @board.cells["B3"].place_ship(@cruiser)
-    # @board.cells["C3"].place_ship(@cruiser)
-    @board.place(@cruiser["A3", "B3", "C3"])
-
-
+    @board.place(@cruiser, ["A3", "B3", "C3"])
+    
     assert_equal true, @board.valid_placement?(@submarine, ["A1", "A2"])
 
     refute @board.valid_placement?(@submarine, ["A2", "A3"])
