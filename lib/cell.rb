@@ -31,18 +31,18 @@ class Cell
   def render(show = false)
     if fired_upon == false
       if show == true && @ship != nil
-        p "S"
+         'S'
       else
-        p "."
+         '.'
       end
     elsif fired_upon == true
       if @ship == nil
-        p "M"
+         'M'
       else
         if @ship.health > 0
-          p "H"
+           'H'
         elsif @ship.health <= 0
-          p "X"
+           'X'
         end
       end
     end
