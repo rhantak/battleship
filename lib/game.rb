@@ -55,5 +55,5 @@ class Game
 end
 
 
-@game = Game.new
-binding.pry
+# @game = Game.new
+# binding.pry
