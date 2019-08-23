@@ -17,6 +17,7 @@ class BoardTest < Minitest::Test
 
   def test_can_validate_a_coordinate
     assert_equal true, @board.valid_coordinate?("A1")
+
     refute @board.valid_coordinate?("E14")
   end
 
