@@ -32,27 +32,28 @@ class Game
   end
 
   def play_game
-    computer_place_ships
+    computer_place_cruiser
+    computer_place_sub
     print @computer_board.render_board(true)
   end
 
-  def computer_place_ships
+  def computer_place_cruiser
     @computer_cruiser = Ship.new("Cruiser", 3)
-    @computer_sub = Ship.new("Submarine", 2)
     @cruiser_coordinates = ["A1", "B2", "C3"]
-      until @computer_board.valid_placement?(@computer_cruiser, @cruiser_coordinates)
-        @cruiser_coordinates = @computer_board.cells.keys.sample(3)
-      end
-    @sub_coordinates = ["A1", "B2"]
-      until @computer_board.valid_placement?(@computer_sub, @sub_coordinates)
-        @sub_coordinates = @computer_board.cells.keys.sample(2)
-      end
-
+    until @computer_board.valid_placement?(@computer_cruiser, @cruiser_coordinates) == true
+      @cruiser_coordinates = @computer_board.cells.keys.sample(3)
+    end
     @computer_board.place(@computer_cruiser, @cruiser_coordinates)
-    @computer_board.place(@computer_sub, @sub_coordinates)
-    @computer_board.render_board(true)
   end
 
+  def computer_place_sub
+    @computer_sub = Ship.new("Submarine", 2)
+    @sub_coordinates = ["A1", "A3"]
+    until @computer_board.valid_placement?(@computer_sub, @sub_coordinates) == true
+      @sub_coordinates = @computer_board.cells.keys.sample(2)
+    end
+    @computer_board.place(@computer_sub, @sub_coordinates)
+  end
 end
 
 

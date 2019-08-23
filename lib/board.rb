@@ -32,13 +32,13 @@ class Board
   end
 
   def valid_placement?(ship, array)
-    ship_is_placed_in_a_straight_line?(ship, array) && ship_isnt_placed_on_another_ship?(array)
+    ship_is_placed_in_a_straight_line?(ship, array) && !ship_isnt_placed_on_another_ship?(array)
   end
 
   def ship_is_placed_in_a_straight_line?(ship, array)
     letters = array.map {|coordinate| coordinate[0]}
     numbers = array.map {|coordinate| coordinate[1]}
-    yrange = Range.new(letters.first,letters.last).count
+    yrange = Range.new(letters.sort.first,letters.sort.last).count
     # Passed in array is horizontally consecutive and all letters are the same (placed on same row)
     if @cells.keys.each_cons(ship.length).any? {|a| a == array} && letters.uniq.count == 1
       true
@@ -52,8 +52,8 @@ class Board
 
   def ship_isnt_placed_on_another_ship?(array)
     # Make sure cell.ship is nil for all cells in placement array
-    array.all? do |coordinate|
-      @cells[coordinate].ship == nil
+    array.any? do |coordinate|
+      @cells[coordinate].ship != nil
     end
   end
 
