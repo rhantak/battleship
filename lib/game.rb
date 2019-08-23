@@ -11,8 +11,8 @@ class Game
   end
 
   def start_game
-    initial_input = nil
-    until initial_input == "q"
+    quit = nil
+    until quit == "q"
       p "Welcome to BATTLESHIP"
       p "Enter 'p' to play. Enter 'q' to quit."
       valid_input = false
@@ -21,9 +21,10 @@ class Game
         initial_input = gets.chomp
         if initial_input.downcase == "p"
           valid_input = true
-          play_game
+          play_game()
         elsif initial_input.downcase == "q"
           valid_input = true
+          quit = "q"
         else p "That was not a valid input. Enter 'p' to play. Enter 'q' to quit."
         end
       end
@@ -31,18 +32,18 @@ class Game
   end
 
   def play_game
-
-    @computer_board
+    computer_place_ships
+    print @computer_board.render_board(true)
   end
 
   def computer_place_ships
     @computer_cruiser = Ship.new("Cruiser", 3)
     @computer_sub = Ship.new("Submarine", 2)
-    @cruiser_coordinates = []
+    @cruiser_coordinates = ["A1", "B2", "C3"]
       until @computer_board.valid_placement?(@computer_cruiser, @cruiser_coordinates)
         @cruiser_coordinates = @computer_board.cells.keys.sample(3)
       end
-    @sub_coordinates = []
+    @sub_coordinates = ["A1", "B2"]
       until @computer_board.valid_placement?(@computer_sub, @sub_coordinates)
         @sub_coordinates = @computer_board.cells.keys.sample(2)
       end
@@ -55,5 +56,5 @@ class Game
 end
 
 
-# @game = Game.new
-# binding.pry
+@game = Game.new
+binding.pry
