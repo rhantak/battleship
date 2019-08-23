@@ -16,7 +16,6 @@ class Game
       p "Welcome to BATTLESHIP"
       p "Enter 'p' to play. Enter 'q' to quit."
       valid_input = false
-
       until valid_input
         initial_input = gets.chomp
         if initial_input.downcase == "p"
@@ -34,7 +33,44 @@ class Game
   def play_game
     computer_place_cruiser
     computer_place_sub
-    print @computer_board.render_board(true)
+    @cruiser = Ship.new("Cruiser", 3)
+    @sub = Ship.new("Submarine", 2)
+
+    puts "Your opponent has laid out their ships on the grid."
+    puts "You now need to place your two ships."
+    puts "The Cruiser is 3 units long and the Submarine is 2 units long."
+    print @player_board.render_board(true)
+    puts "Enter the squares for your Cruiser (3 spaces) separated by spaces"
+    puts "Example: A1 A2 A3"
+
+    good_cruiser = false
+    until good_cruiser
+      print "> "
+      cruiser_spaces = gets.chomp
+      cruiser_array = cruiser_spaces.split(" ").to_a
+      if @player_board.valid_placement?(@cruiser, cruiser_array)
+        good_cruiser = true
+        @player_board.place(@cruiser, cruiser_array)
+      else
+        puts "That's an invalid placement shipmate, please try again."
+      end
+    end
+
+    print @player_board.render_board(true)
+    puts "Enter the squares for your Submarine (2 spaces)"
+
+    good_sub = false
+    until good_sub
+      print "> "
+      sub_spaces = gets.chomp
+      sub_array = sub_spaces.split(" ").to_a
+      if @player_board.valid_placement?(@sub, sub_array)
+        good_sub = true
+        @player_board.place(@sub, sub_array)
+      else
+        puts "That's an invalid placement shipmate, please try again."
+      end
+    end
   end
 
   def computer_place_cruiser
