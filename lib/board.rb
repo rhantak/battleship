@@ -64,10 +64,10 @@ class Board
   end
 
   def render_board(show = false)
-    "\s \s \s \s 1   2   3   4\n\
-    A   #{@cells["A1"].render(show)}   #{@cells["A2"].render(show)}   #{@cells["A3"].render(show)}   #{@cells["A4"].render(show)}\n\
-    B   #{@cells["B1"].render(show)}   #{@cells["B2"].render(show)}   #{@cells["B3"].render(show)}   #{@cells["B4"].render(show)}\n\
-    C   #{@cells["C1"].render(show)}   #{@cells["C2"].render(show)}   #{@cells["C3"].render(show)}   #{@cells["C4"].render(show)}\n\
-    D   #{@cells["D1"].render(show)}   #{@cells["D2"].render(show)}   #{@cells["D3"].render(show)}   #{@cells["D4"].render(show)}\n"
+    "\s \s \s  1   2   3   4\n\
+    A  #{@cells["A1"].render(show)}   #{@cells["A2"].render(show)}   #{@cells["A3"].render(show)}   #{@cells["A4"].render(show)}\n\
+    B  #{@cells["B1"].render(show)}   #{@cells["B2"].render(show)}   #{@cells["B3"].render(show)}   #{@cells["B4"].render(show)}\n\
+    C  #{@cells["C1"].render(show)}   #{@cells["C2"].render(show)}   #{@cells["C3"].render(show)}   #{@cells["C4"].render(show)}\n\
+    D  #{@cells["D1"].render(show)}   #{@cells["D2"].render(show)}   #{@cells["D3"].render(show)}   #{@cells["D4"].render(show)}\n"
   end
 end
