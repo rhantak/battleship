@@ -17,6 +17,7 @@ class BoardTest < Minitest::Test
 
   def test_can_validate_a_coordinate
     assert_equal true, @board.valid_coordinate?("A1")
+
     refute @board.valid_coordinate?("E14")
   end
 
@@ -29,6 +30,9 @@ class BoardTest < Minitest::Test
     refute @board.valid_placement?(@cruiser, ["A1", "A2", "A4"])
     refute @board.valid_placement?(@cruiser, ["A1", "B2", "C3"])
     refute @board.valid_placement?(@cruiser,["A1", "B2"])
+    refute @board.valid_placement?(@cruiser,["A1", "B1", "D1"])
+    refute @board.valid_placement?(@cruiser,["A3", "C3", "D3"])
+    refute @board.valid_placement?(@cruiser,["A4", "B4", "D4"])
     refute @board.valid_placement?(@submarine,["A1", "A3"])
     refute @board.valid_placement?(@submarine,["A1", "B2"])
     refute @board.valid_placement?(@submarine,["A1", "B2", "C3"])
@@ -66,5 +70,4 @@ class BoardTest < Minitest::Test
 
     assert_equal "        1   2   3   4\n    A   .   .   H   M\n    B   X   X   .   .\n    C   .   .   .   .\n    D   .   .   .   .\n", @board.render_board
   end
-
 end
