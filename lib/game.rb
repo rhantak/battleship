@@ -78,6 +78,13 @@ class Game
     until good_cruiser
       print "> "
       cruiser_spaces = gets.chomp.upcase
+      until cruiser_spaces != ""
+        if cruiser_spaces == ""
+          puts "Please enter 3 coordinates."
+          print "> "
+          cruiser_spaces = gets.chomp.upcase
+        end
+      end
       cruiser_array = cruiser_spaces.split(" ").to_a
       if @player_board.valid_placement?(@cruiser, cruiser_array.sort)
         good_cruiser = true
@@ -95,6 +102,13 @@ class Game
     until good_sub
       print "> "
       sub_spaces = gets.chomp.upcase
+      until sub_spaces != ""
+        if sub_spaces == ""
+          puts "Please enter 2 coordinates."
+          print "> "
+          sub_spaces = gets.chomp.upcase
+        end
+      end
       sub_array = sub_spaces.split(" ").to_a
       if @player_board.valid_placement?(@sub, sub_array.sort)
         good_sub = true
