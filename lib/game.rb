@@ -199,6 +199,3 @@ class Game
     puts " "
   end
 end
-
-@game = Game.new
-binding.pry
