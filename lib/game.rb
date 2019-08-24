@@ -33,6 +33,12 @@ class Game
   def play_game
     computer_place_cruiser
     computer_place_sub
+    player_place_ships
+    10.times do take_turn
+    end
+  end
+
+  def player_place_ships
     @cruiser = Ship.new("Cruiser", 3)
     @sub = Ship.new("Submarine", 2)
 
@@ -46,7 +52,7 @@ class Game
     good_cruiser = false
     until good_cruiser
       print "> "
-      cruiser_spaces = gets.chomp
+      cruiser_spaces = gets.chomp.upcase
       cruiser_array = cruiser_spaces.split(" ").to_a
       if @player_board.valid_placement?(@cruiser, cruiser_array)
         good_cruiser = true
@@ -62,7 +68,7 @@ class Game
     good_sub = false
     until good_sub
       print "> "
-      sub_spaces = gets.chomp
+      sub_spaces = gets.chomp.upcase
       sub_array = sub_spaces.split(" ").to_a
       if @player_board.valid_placement?(@sub, sub_array)
         good_sub = true
@@ -89,6 +95,29 @@ class Game
       @sub_coordinates = @computer_board.cells.keys.sample(2)
     end
     @computer_board.place(@computer_sub, @sub_coordinates)
+  end
+
+  def take_turn
+    puts "=============COMPUTER BOARD============="
+    print @computer_board.render_board
+    puts "==============PLAYER BOARD=============="
+    print @player_board.render_board(true)
+    puts "============Battle Stations!============"
+
+    puts "Captain, enemy ships detected. Where should we fire?"
+    print "Enter your firing coordinate: "
+    good_shot = false
+    until good_shot
+      print "> "
+      player_shot = gets.chomp.upcase.to_s
+      if @computer_board.valid_coordinate?(player_shot) && !@computer_board.cells[player_shot].fired_upon?
+         @computer_board.cells[player_shot].fire_upon
+         good_shot = true
+      else
+         puts "I don't think that's wise Captain."
+         puts "Please enter a valid firing coordinate you haven't already chosen."
+      end
+    end
   end
 end
 
