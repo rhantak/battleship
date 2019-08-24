@@ -34,8 +34,15 @@ class Game
     computer_place_cruiser
     computer_place_sub
     player_place_ships
-    10.times do take_turn
-    end
+    take_turn
+    computer_take_turn
+    take_turn
+    computer_take_turn
+    take_turn
+    computer_take_turn
+    take_turn
+    computer_take_turn
+    take_turn
   end
 
   def player_place_ships
@@ -119,7 +126,21 @@ class Game
       end
     end
   end
+
+  def computer_take_turn
+    good_shot = false
+    computer_shot = "A4"
+    until good_shot
+      computer_shot = @player_board.cells.keys.sample(1)
+      if @player_board.valid_coordinate?(computer_shot[0]) && !@player_board.cells[computer_shot[0]].fired_upon?
+        @player_board.cells[computer_shot[0]].fire_upon
+        good_shot = true
+      end
+    end
+  end
 end
+
+
 
 
 @game = Game.new
