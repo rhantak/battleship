@@ -34,15 +34,8 @@ class Game
     computer_place_cruiser
     computer_place_sub
     player_place_ships
-    take_turn
-    computer_take_turn
-    take_turn
-    computer_take_turn
-    take_turn
-    computer_take_turn
-    take_turn
-    computer_take_turn
-    take_turn
+    10.times do take_turn
+    end
   end
 
   def player_place_ships
@@ -125,6 +118,16 @@ class Game
          puts "Please enter a valid firing coordinate you haven't already chosen."
       end
     end
+    shot_result = nil
+    if @computer_board.cells[player_shot].render == "M"
+      shot_result = "was a miss"
+    elsif @computer_board.cells[player_shot].render == "H"
+      shot_result = "was a hit"
+    elsif @computer_board.cells[player_shot].render == "X"
+      shot_result = "sunk the opponent's #{@computer_board.cells[player_shot].ship.name}"
+    end
+    puts "Your shot at #{player_shot} #{shot_result}!"
+    computer_take_turn
   end
 
   def computer_take_turn
@@ -137,6 +140,15 @@ class Game
         good_shot = true
       end
     end
+    shot_result = nil
+    if @player_board.cells[computer_shot[0]].render == "M"
+      shot_result = "was a miss"
+    elsif @player_board.cells[computer_shot[0]].render == "H"
+      shot_result = "was a hit"
+    elsif @player_board.cells[computer_shot[0]].render == "X"
+      shot_result = "sunk your #{@player_board.cells[computer_shot[0]].ship.name}"
+    end
+    puts "Your opponent's shot at #{computer_shot[0]} #{shot_result}!"
   end
 end
 
