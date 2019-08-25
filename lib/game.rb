@@ -7,9 +7,62 @@ class Game
   attr_reader :player_board, :computer_board
 
   def initialize
-    @player_board = Board.new
-    @computer_board = Board.new
+    binding.pry
+    # print "How large of a playing field do you want?"
+    # print "Board 1: 4x4"
+    # print "Board 2: 6x6"
+    # print "Board 3: 8x8"
+    # print "Board 4: 10x10"
+    # print "Enter the number of the board you'd like to play with."
+    # @board_selection = gets.chomp.to_i
+    # #have different board classes for each respective size.
+    # board_selection_verif = false
+
+    until board_selection_verif == true
+      print "How large of a playing field do you want?"
+      print "Board 1: 4x4"
+      print "Board 2: 6x6"
+      print "Board 3: 8x8"
+      print "Board 4: 10x10"
+      print "Enter the number of the board you'd like to play with."
+      @board_selection = gets.chomp.to_i
+      if
+        board_selection = 1
+        @player_board = Board.new
+        @computer_board = Board_1.new
+        board_selection_verif = true
+      elsif
+        board_selection = 2
+        @player_board = Board_2.new
+        @computer_board = Board_2.new
+        board_selection_verif = true
+      elsif
+        board_selection = 3
+        @player_board = Board_3.new
+        @computer_board = Board_3.new
+        board_selection_verif = true
+      elsif
+        board_selection = 4
+        @player_board = Board_4.new
+        @computer_board = Board_4.new
+        board_selection_verif = true
+      else
+        print "That is not a valid response. Please choose a number between 1 and 4"
+        print "========================================"
+        print "How large of a playing field do you want?"
+        print "Board 1: 4x4"
+        print "Board 2: 6x6"
+        print "Board 3: 8x8"
+        print "Board 4: 10x10"
+        print "Enter the number of the board you'd like to play with."
+        #not sure if this should be an instance variable (when initial selection is outside this 'until' method)
+        board_selection = gets.chomp.to_i
+        #have different board classes for each respective size.
+
+      end
+    end
   end
+  binding.pry
 
   def start_game
     quit = nil
@@ -60,19 +113,73 @@ class Game
     end
   end
 
-  def player_place_ships
-    @cruiser = Ship.new("Cruiser", 3)
-    @sub = Ship.new("Submarine", 2)
+#have every new ship be its own loop, so we can assign different instance variables to them.
+  def player_create_ships
+    print "What ship should we add to our fleet comrade?"
+    print "(Some ship class and size suggestions, famous battleships)"
+    print " "
+    print "> "
+    new_ship_name = gets.chomp.to_s
 
+    new_ship = false
+    until new_ship
+      if
+        new_ship_name.count >= 3
+        new_ship = true
+      else
+        puts "Try naming it something else"
+        #trying to loop back to beginning of this method
+        @game.player_create_ships
+      end
+    end
+
+      print "How large should our ship be?"
+      print "> "
+      new_ship_size = gets.chomp
+      new_ship_size_validation = false
+    until new_ship_size_validation = true
+       if
+         new_ship_size = integer
+         new_ship_size_validation = true
+       else
+         puts "You have to select a Number"
+
+
+       end
+    end
+  end
+
+
+
+  #break this into 2 methods, creating ship class and size, then placing the new_ships.
+  def player_place_ships
     system "clear"
-    puts "Your enemy has laid out their ships on the grid."
-    puts "You now need to place your two ships."
-    puts "The Cruiser is 3 units long and the Submarine is 2 units long."
+    puts "Your enemy has maneuvered their ships within firing range."
+    puts "You now need to position your fleet."
+    puts "The #{@ship_1.@name} is #{@ship_1.length.to_s} spaces long."
     puts " "
     print @player_board.render_board(true)
     puts " "
-    puts "Enter the squares for your Cruiser (3 spaces) separated by spaces"
+    puts "Enter the squares for your #{@ship_1.@name} (#{@ship_1.length.to_s} spaces) separated by spaces"
     puts "Example: A1 A2 A3"
+
+
+      new_ship_spaces = gets.chomp.upcase
+      until new_ship_coordinates != ""
+        if new_ship_coordinates == ""
+          puts "Please enter 3 coordinates."
+          print "> "
+          new_ship_coordinates = gets.chomp.upcase
+        end
+      end
+      cruiser_array = new_ship_coordinates.split(" ").to_a
+      if @player_board.valid_placement?(@cruiser, cruiser_array.sort)
+        good_cruiser = true
+        @player_board.place(@cruiser, cruiser_array.sort)
+      else
+        puts "That's an invalid placement comrade, please try again."
+      end
+    end
 
     good_cruiser = false
     until good_cruiser
