@@ -4,8 +4,9 @@ require './lib/board'
 require './lib/game'
 require 'pry'
 
-binding.pry
+
 
 @game = Game.new
-
-@game.start_game
+@game.player_create_ships
+@game.player_place_ships
+# binding.pry
