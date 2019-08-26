@@ -32,7 +32,7 @@ class Board
   end
 
   def valid_placement?(ship, array)
-    ship_is_placed_in_a_straight_line?(ship, array) && !ship_isnt_placed_on_another_ship?(array)
+    ship_is_placed_in_a_straight_line?(ship, array) && ship_isnt_placed_on_another_ship?(array)
   end
 
   def ship_is_placed_in_a_straight_line?(ship, array)
@@ -43,7 +43,7 @@ class Board
     if @cells.keys.each_cons(ship.length).any? {|a| a == array} && letters.uniq.count == 1
       true
     # Passed in array is vertically consecutive and all numbers are the same (placed in same column)
-    elsif (letters.uniq.count == array.count) && (numbers.uniq.count == 1) && (yrange == ship.length)
+    elsif (numbers.uniq.count == 1) && (yrange == ship.length)
       true
     else
       false
@@ -52,8 +52,8 @@ class Board
 
   def ship_isnt_placed_on_another_ship?(array)
     # Make sure cell.ship is nil for all cells in placement array
-    array.any? do |coordinate|
-      @cells[coordinate].ship != nil
+    array.all? do |coordinate|
+      @cells[coordinate].ship == nil
     end
   end
 
@@ -63,11 +63,26 @@ class Board
     end
   end
 
-  def render_board(show = false)
+  def original_render_board(show = false)
     "\s \s \s  1   2   3   4\n\
     A  #{@cells["A1"].render(show)}   #{@cells["A2"].render(show)}   #{@cells["A3"].render(show)}   #{@cells["A4"].render(show)}\n\
     B  #{@cells["B1"].render(show)}   #{@cells["B2"].render(show)}   #{@cells["B3"].render(show)}   #{@cells["B4"].render(show)}\n\
     C  #{@cells["C1"].render(show)}   #{@cells["C2"].render(show)}   #{@cells["C3"].render(show)}   #{@cells["C4"].render(show)}\n\
     D  #{@cells["D1"].render(show)}   #{@cells["D2"].render(show)}   #{@cells["D3"].render(show)}   #{@cells["D4"].render(show)}\n"
   end
+
+  def render_board(show = false)
+    letters = @cells.keys.map {|coordinate| coordinate[0]}.uniq
+    numbers = @cells.keys.map {|coordinate| coordinate[1]}.uniq
+
+    render_string = "\s \s \s  1   2   3   4"
+    letters.each do |letter|
+      render_string += "\n #{letter} \s"
+      numbers.each do |number|
+        render_string += " \s " + @cells["#{letter}#{number}"].render(show)
+      end
+    end
+    render_string
+  end
+
 end
