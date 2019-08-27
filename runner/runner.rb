@@ -7,6 +7,5 @@ require 'pry'
 
 
 @game = Game.new
-@game.player_create_ships
-@game.player_place_ships
+@game.start_game
 # binding.pry
