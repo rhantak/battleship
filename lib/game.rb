@@ -85,7 +85,7 @@ class Game
         puts @computer_board.render_board(true)
         puts " "
         puts "==============PLAYER BOARD=============="
-        puts @player_board.render_board(true
+        puts @player_board.render_board(true)
         puts " "
       end
     end
