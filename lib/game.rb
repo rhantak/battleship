@@ -253,11 +253,11 @@ class Game
     end
 
     shot_result = nil
-    if @computer_board.cells[player_shot].render == "M"
+    if @computer_board.cells[player_shot].render == "M".colorize(:cyan).bold
       shot_result = "was a miss"
-    elsif @computer_board.cells[player_shot].render == "H"
+    elsif @computer_board.cells[player_shot].render == "H".colorize(:red).bold
       shot_result = "was a hit"
-    elsif @computer_board.cells[player_shot].render == "X"
+    elsif @computer_board.cells[player_shot].render == "X".colorize(:red).bold
       shot_result = "sunk the enemy's #{@computer_board.cells[player_shot].ship.name}"
       @computer_ships_in_play -= 1
     end
@@ -279,11 +279,11 @@ class Game
       end
     end
     shot_result = nil
-    if @player_board.cells[computer_shot[0]].render == "M"
+    if @player_board.cells[computer_shot[0]].render == "M".colorize(:cyan).bold
       shot_result = "was a miss"
-    elsif @player_board.cells[computer_shot[0]].render == "H"
+    elsif @player_board.cells[computer_shot[0]].render == "H".colorize(:red).bold
       shot_result = "was a hit"
-    elsif @player_board.cells[computer_shot[0]].render == "X"
+    elsif @player_board.cells[computer_shot[0]].render == "X".colorize(:red).bold
       shot_result = "sunk your #{@player_board.cells[computer_shot[0]].ship.name}"
       @player_ships_in_play -= 1
     end
