@@ -9,15 +9,13 @@ class Game
 
 
   def initialize
-    @player_board = Board.new
-    @computer_board = Board.new
     @player_ships = []
     @computer_ships = []
     @player_ships_in_play = 0
     @computer_ships_in_play = 0
 
   end
-  
+
   def start_game
     quit = nil
     until quit == "q"
@@ -91,7 +89,7 @@ class Game
       @length = gets.chomp.to_i
     end
   end
-  
+
   def player_create_ships
     system "clear"
     puts "The enemy is encroaching. We must mobilize your fleet!"
@@ -129,15 +127,15 @@ class Game
       new_ship_size = gets.chomp.to_i
       new_ship_size_validation = false
     until new_ship_size_validation == true
-       if
-        new_ship_size.is_a? Integer
+      is_int = new_ship_size.is_a? Integer
+      if is_int && (new_ship_size <= @width || new_ship_size <= @length)
         new_ship_size_validation = true
-       else
-         puts "You have to select a Number"
-         puts "How large should your ship be?"
-         puts "> "
-         new_ship_size = gets.chomp
-       end
+      else
+        puts "You have to select a number that fits on the board."
+        puts "How large should your ship be?"
+        puts "> "
+        new_ship_size = gets.chomp.to_i
+      end
     end
     player_ship = Ship.new(new_ship_name, new_ship_size)
     computer_ship = Ship.new(new_ship_name, new_ship_size)
