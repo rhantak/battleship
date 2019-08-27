@@ -60,10 +60,14 @@ class Board
     numbers = @cells.keys.map {|coordinate| coordinate.gsub(/[A-Z]/,'')}.uniq
     render_string = "\s \s \s  "
     numbers.each do |number|
-      render_string += "#{number} \s "
+      if number.to_s.length == 1
+        render_string += "#{number} \s "
+      elsif number.to_s.length == 2
+        render_string += "#{number} \s"
+      end
     end
     letters.each do |letter|
-      render_string += "\n #{letter} \s"
+      render_string += "\n\n #{letter} \s"
       numbers.each do |number|
         render_string += " \s " + @cells["#{letter}#{number}"].render(show)
       end
