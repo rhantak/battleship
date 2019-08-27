@@ -6,19 +6,30 @@ require 'pry'
 
 class SmartShots
     def initialize(board)
+    @board = board
     @width = board.board_width
     @length = board.board_length
     @small_dim = [@width, @length].min
-    @hits = []
-    @next_targs = []
     @cells = board.cells
+    @oriented = "?"
   end
 
   def generate_smart_shots
+    @hits = []
+    @next_targs = []
+    @best_targs = []
+    @consec_hits = []
     identify_hits
-    vertical_check(@hits)
-    horizontal_check(@hits)
-    @next_targs
+    vertical_check
+    horizontal_check
+    if @hits != []
+      check_for_consecutive_hits
+      if @consec_hits != []
+        return check_best_targs()
+      else
+        return @next_targs
+      end
+    end
   end
 
   def identify_hits
@@ -29,7 +40,7 @@ class SmartShots
     end
   end
 
-  def horizontal_check(hits)
+  def horizontal_check
     @hits.map do |hit|
       letter = hit[0]
       number = hit.gsub(/[A-Z]/,"")
@@ -48,7 +59,7 @@ class SmartShots
     end
   end
 
-  def vertical_check(hits)
+  def vertical_check
     @hits.map do |hit|
       letter = hit[0].ord
       number = hit.gsub(/[A-Z]/,"")
@@ -63,5 +74,39 @@ class SmartShots
         @next_targs << below_coord
       end
     end
+  end
+
+  def check_for_consecutive_hits
+    @hits.each do |coord|
+      if @next_targs.include?(coord) && @board.cells[coord].render == "H"
+        @consec_hits << coord
+      end
+    end
+    @letters1 = []
+    @consec_hits.each do |coord|
+      @letters1 << coord[0]
+    end
+    if @letters1.uniq.size == 1
+      @oriented = "h"
+    else
+      @oriented = "v"
+    end
+  end
+
+  def check_best_targs
+    if @oriented == "h"
+      letter = @consec_hits[0][0]
+      num1 = @consec_hits[0].gsub(/[A-Z]/,"")
+      num2 = @consec_hits[1].gsub(/[A-Z]/,"")
+      @best_targs << letter + "#{num1.to_i + 1}"
+      @best_targs << letter + "#{num2.to_i - 1}"
+    elsif @oriented == "v"
+      number = @consec_hits[0].gsub(/[A-Z]/,"")
+      letter1 = @consec_hits[0][0].ord
+      letter2 = @consec_hits[1][0].ord
+      @best_targs << (letter1 - 1).chr + number
+      @best_targs << (letter1 + 1).chr + number
+    end
+    @best_targs
   end
 end

@@ -273,7 +273,7 @@ class Game
     good_shot = false
     computer_shot = "Z13"
     until good_shot
-      if @smart_shots.generate_smart_shots != []
+      if @smart_shots.generate_smart_shots != nil
         computer_shot = @smart_shots.generate_smart_shots.sample(1)
       else
         computer_shot = @player_board.cells.keys.sample(1)
