@@ -79,13 +79,13 @@ class Game
     puts "Choose a number between 1 and 12 for your board's width."
     @width = gets.chomp.to_i
     until @width <= 12 && @width >= 1
-      "That's not going to work, please choose a number between 1 and 12."
+      puts "That's not going to work, please choose a number between 1 and 12."
       @width = gets.chomp.to_i
     end
     puts "Ok, now choose a number between 1 and 12 for your board's length."
     @length = gets.chomp.to_i
     until @length <= 12 && @length >=1
-      puts "That's not going to work, please choose a number between 1 and 12."
+      puts "That's not going to work, please choose a number between 1 and 12." 
       @length = gets.chomp.to_i
     end
   end
@@ -127,14 +127,14 @@ class Game
       new_ship_size = gets.chomp.to_i
       new_ship_size_validation = false
     until new_ship_size_validation == true
-      is_int = new_ship_size.is_a? Integer
+      is_int = new_ship_size == [1..12]
       if is_int && (new_ship_size <= @width || new_ship_size <= @length)
         new_ship_size_validation = true
       else
         puts "You have to select a number that fits on the board."
         puts "How large should your ship be?"
-        puts "> "
-        new_ship_size = gets.chomp.to_i
+        print "> "
+        new_ship_size = gets.chomp
       end
     end
     player_ship = Ship.new(new_ship_name, new_ship_size)
