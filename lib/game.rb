@@ -1,6 +1,7 @@
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
+require './lib/smart_shots'
 require 'pry'
 require 'colorize'
 
@@ -14,7 +15,6 @@ class Game
     @computer_ships = []
     @player_ships_in_play = 0
     @computer_ships_in_play = 0
-
   end
 
   def start_game
@@ -43,6 +43,7 @@ class Game
     ask_for_dimensions
     @player_board = Board.new(@width, @length)
     @computer_board = Board.new(@width, @length)
+    @smart_shots = SmartShots.new(@player_board)
     player_create_ships
     computer_place_ships
     player_place_ships
@@ -85,7 +86,7 @@ class Game
         puts @computer_board.render_board(true)
         puts " "
         puts "==============PLAYER BOARD=============="
-        puts @player_board.render_board(true
+        puts @player_board.render_board(true)
         puts " "
       end
     end
@@ -270,9 +271,13 @@ class Game
 
   def computer_take_turn
     good_shot = false
-    computer_shot = "A4"
+    computer_shot = "Z13"
     until good_shot
-      computer_shot = @player_board.cells.keys.sample(1)
+      if @smart_shots.generate_smart_shots != []
+        computer_shot = @smart_shots.generate_smart_shots.sample(1)
+      else
+        computer_shot = @player_board.cells.keys.sample(1)
+      end
       if @player_board.valid_coordinate?(computer_shot[0]) && !@player_board.cells[computer_shot[0]].fired_upon?
         @player_board.cells[computer_shot[0]].fire_upon
         good_shot = true
