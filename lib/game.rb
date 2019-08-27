@@ -7,6 +7,7 @@ require 'colorize'
 class Game
   attr_reader :player_board, :computer_board, :player_ships_in_play, :computer_ships_in_play
 
+
   def initialize
     @player_board = Board.new
     @computer_board = Board.new
@@ -16,8 +17,8 @@ class Game
     @computer_ships_in_play = 0
 
   end
-
-   def start_game
+  
+  def start_game
     quit = nil
     until quit == "q"
       p "Welcome to BATTLESHIP Comrade!"
@@ -40,6 +41,9 @@ class Game
   end
 
   def play_game
+    ask_for_dimensions
+    @player_board = Board.new(@width, @length)
+    @computer_board = Board.new(@width, @length)
     player_create_ships
     computer_place_ships
     player_place_ships
@@ -73,6 +77,21 @@ class Game
     end
   end
 
+  def ask_for_dimensions
+    puts "Choose a number between 1 and 12 for your board's width."
+    @width = gets.chomp.to_i
+    until @width <= 12 && @width >= 1
+      "That's not going to work, please choose a number between 1 and 12."
+      @width = gets.chomp.to_i
+    end
+    puts "Ok, now choose a number between 1 and 12 for your board's length."
+    @length = gets.chomp.to_i
+    until @length <= 12 && @length >=1
+      puts "That's not going to work, please choose a number between 1 and 12."
+      @length = gets.chomp.to_i
+    end
+  end
+  
   def player_create_ships
     system "clear"
     puts "The enemy is encroaching. We must mobilize your fleet!"
