@@ -14,48 +14,6 @@ class Game
     @computer_ships = []
     @player_ships_in_play = 0
     @computer_ships_in_play = 0
-    #have different board classes for each respective size.
-    # board_selection_verif = false
-    # until board_selection_verif == true
-    #   puts "How large of a playing field do you want?"
-    #   puts "Board 1: 4x4"
-    #   puts "Board 2: 6x6"
-    #   puts "Board 3: 8x8"
-    #   puts "Board 4: 10x10"
-    #   puts "Enter the number of the board you'd like to play with."
-    #   board_selection = gets.chomp.to_i
-    #   if
-    #     board_selection == 1
-    #     @player_board = Board.new
-    #     @computer_board = Board.new
-    #     board_selection_verif = true
-    #   elsif
-    #     board_selection == 2
-    #     @player_board = Board_2.new
-    #     @computer_board = Board_2.new
-    #     board_selection_verif = true
-    #   elsif
-    #     board_selection == 3
-    #     @player_board = Board_3.new
-    #     @computer_board = Board_3.new
-    #     board_selection_verif = true
-    #   elsif
-    #     board_selection == 4
-    #     @player_board = Board_4.new
-    #     @computer_board = Board_4.new
-    #     board_selection_verif = true
-    #   else
-    #     system "clear"
-    #     puts "That is not a valid response. Please choose a number between 1 and 4"
-    #     puts "========================================"
-    #     puts "How large of a playing field do you want?"
-    #     puts "Board 1: 4x4"
-    #     puts "Board 2: 6x6"
-    #     puts "Board 3: 8x8"
-    #     puts "Board 4: 10x10"
-    #     puts "Enter the number of the board you'd like to play with."
-    #     board_selection = gets.chomp.to_i
-        #have different board classes for each respective size.
 
   end
 
@@ -92,18 +50,12 @@ class Game
     computer_ships_sunk = false
     until computer_loss || player_loss
       take_turn
-      binding.pry
-      #need to find a way to verify ships are dead.
-      # player_ships_sunk = @player_ships.all? {|ship| ship.health <= 0}
+
       if @player_ships_in_play <= 0
         player_ships_sunk = true
       elsif @computer_ships_in_play <= 0
         computer_ships_sunk = true
       end
-      #Won't let you access the 'cells'.
-      # shift ships as they're sunk into a new array?
-      # player_ships_sunk = @player_board.cells.all? {|cell| cell.ship.sunk }
-      # computer_ships_sunk = @computer_board.cells.all? {|cell| cell.ship.health <= 0 || nil}
 
       if player_ships_sunk
         player_loss = true
@@ -168,11 +120,12 @@ class Game
          new_ship_size = gets.chomp
        end
     end
-    ship = Ship.new(new_ship_name, new_ship_size)
+    player_ship = Ship.new(new_ship_name, new_ship_size)
+    computer_ship = Ship.new(new_ship_name, new_ship_size)
     @player_ships_in_play += 1
     @computer_ships_in_play += 1
-    @player_ships << ship
-    @computer_ships << ship
+    @player_ships << player_ship
+    @computer_ships << computer_ship
     player_create_more_ships
   end
 
@@ -224,8 +177,6 @@ class Game
 
         if @player_board.valid_placement?(@player_ships[0], ship_array.sort)
           good_ship = true
-          #@player_ships.shift leaves an empty array and is hard to verify
-          #find a way to store placed ships in a new array.
           @player_board.place(@player_ships.shift, ship_array.sort)
         else
           puts "That's an invalid placement comrade, please try again."
@@ -240,7 +191,6 @@ class Game
       until @computer_board.valid_placement?(@computer_ships[0], ship_coordinates) == true
         ship_coordinates = @computer_board.cells.keys.sample(@computer_ships[0].length)
       end
-      #find a way to store placed ships in new array.
       @computer_board.place(@computer_ships.shift, ship_coordinates)
     end
   end
@@ -248,7 +198,6 @@ class Game
 
 
   def take_turn
-    system "clear"
     puts "=============COMPUTER BOARD============="
     print @computer_board.render_board
     puts " "
