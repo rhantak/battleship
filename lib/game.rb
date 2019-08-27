@@ -5,14 +5,15 @@ require 'pry'
 require 'colorize'
 
 class Game
-  attr_reader :player_board, :computer_board, :ships_in_play
+  attr_reader :player_board, :computer_board, :player_ships_in_play, :computer_ships_in_play
 
   def initialize
     @player_board = Board.new
     @computer_board = Board.new
     @player_ships = []
     @computer_ships = []
-    @ships_in_play = 0
+    @player_ships_in_play = 0
+    @computer_ships_in_play = 0
     #have different board classes for each respective size.
     # board_selection_verif = false
     # until board_selection_verif == true
@@ -94,9 +95,9 @@ class Game
       binding.pry
       #need to find a way to verify ships are dead.
       # player_ships_sunk = @player_ships.all? {|ship| ship.health <= 0}
-      if @player_board_sunk == @ships_in_play
+      if @player_ships_in_play <= 0
         player_ships_sunk = true
-      elsif @computer_board_sunk == @ships_in_play
+      elsif @computer_ships_in_play <= 0
         computer_ships_sunk = true
       end
       #Won't let you access the 'cells'.
@@ -168,7 +169,8 @@ class Game
        end
     end
     ship = Ship.new(new_ship_name, new_ship_size)
-    @ships_in_play += 1
+    @player_ships_in_play += 1
+    @computer_ships_in_play += 1
     @player_ships << ship
     @computer_ships << ship
     player_create_more_ships
@@ -271,14 +273,13 @@ class Game
     end
 
     shot_result = nil
-    @computer_board_sunk = 0
     if @computer_board.cells[player_shot].render == "M"
       shot_result = "was a miss"
     elsif @computer_board.cells[player_shot].render == "H"
       shot_result = "was a hit"
     elsif @computer_board.cells[player_shot].render == "X"
       shot_result = "sunk the enemy's #{@computer_board.cells[player_shot].ship.name}"
-      @computer_board_sunk += 1
+      @computer_ships_in_play -= 1
     end
     system "clear"
     puts "Comrade, your shot at #{player_shot} #{shot_result}!"
@@ -296,14 +297,13 @@ class Game
       end
     end
     shot_result = nil
-    @player_board_sunk = 0
     if @player_board.cells[computer_shot[0]].render == "M"
       shot_result = "was a miss"
     elsif @player_board.cells[computer_shot[0]].render == "H"
       shot_result = "was a hit"
     elsif @player_board.cells[computer_shot[0]].render == "X"
       shot_result = "sunk your #{@player_board.cells[computer_shot[0]].ship.name}"
-      @player_board_sunk += 1
+      @player_ships_in_play -= 1
     end
     puts "The enemy's shot at #{computer_shot[0]} #{shot_result}!"
     puts "========================================"
