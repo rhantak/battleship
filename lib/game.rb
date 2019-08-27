@@ -9,6 +9,7 @@ class Game
 
 
   def initialize
+    system "clear"
     @player_ships = []
     @computer_ships = []
     @player_ships_in_play = 0
@@ -45,6 +46,7 @@ class Game
     player_create_ships
     computer_place_ships
     player_place_ships
+    system "clear"
     is_game_over?
 
   end
@@ -65,19 +67,25 @@ class Game
 
       if player_ships_sunk
         player_loss = true
+        system "clear"
         puts "The enemy sunk all your ships! A loss for the Motherland!"
         puts " "
-        puts "=" * 40
-        puts @player_board.render_board(true)
+        puts "=============COMPUTER BOARD============="
         puts @computer_board.render_board(true)
+        puts " "
+        puts "==============PLAYER BOARD=============="
+        puts @player_board.render_board(true)
         puts " "
       elsif computer_ships_sunk
         computer_loss = true
+        system "clear"
         puts "You sunk all your enemy's ships! A victory for the Motherland!"
         puts " "
-        puts "=" * 40
-        puts @player_board.render_board(true)
+        puts "=============COMPUTER BOARD============="
         puts @computer_board.render_board(true)
+        puts " "
+        puts "==============PLAYER BOARD=============="
+        puts @player_board.render_board(true
         puts " "
       end
     end
@@ -135,7 +143,7 @@ class Game
       new_ship_size = gets.chomp.to_i
       new_ship_size_validation = false
     until new_ship_size_validation
-      is_int = new_ship_size == [1..12]
+      is_int = (1..12).include?(new_ship_size)
       if is_int && (new_ship_size <= @width || new_ship_size <= @length)
         new_ship_size_validation = true
       else
@@ -280,7 +288,7 @@ class Game
       @player_ships_in_play -= 1
     end
     puts "The enemy's shot at #{computer_shot[0]} #{shot_result}!"
-    puts "========================================"
+    puts " "
     puts " "
   end
 end
