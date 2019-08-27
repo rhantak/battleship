@@ -45,7 +45,11 @@ class Game
     player_create_ships
     computer_place_ships
     player_place_ships
+    is_game_over?
 
+  end
+
+  def is_game_over?
     computer_loss = false
     player_loss = false
     player_ships_sunk = false
@@ -64,12 +68,16 @@ class Game
         puts "The enemy sunk all your ships! A loss for the Motherland!"
         puts " "
         puts "=" * 40
+        puts @player_board.render_board(true)
+        puts @computer_board.render_board(true)
         puts " "
       elsif computer_ships_sunk
         computer_loss = true
         puts "You sunk all your enemy's ships! A victory for the Motherland!"
         puts " "
         puts "=" * 40
+        puts @player_board.render_board(true)
+        puts @computer_board.render_board(true)
         puts " "
       end
     end
@@ -85,14 +93,14 @@ class Game
     puts "Ok, now choose a number between 1 and 12 for your board's length."
     @length = gets.chomp.to_i
     until @length <= 12 && @length >=1
-      puts "That's not going to work, please choose a number between 1 and 12." 
+      puts "That's not going to work, please choose a number between 1 and 12."
       @length = gets.chomp.to_i
     end
   end
 
   def player_create_ships
     system "clear"
-    puts "The enemy is encroaching. We must mobilize your fleet!"
+    puts "The enemy is approaching. We must mobilize your fleet!"
     puts "What ship should we add to your fleet comrade?"
     puts " "
     puts "Aircraft Carriers: Enterprise, Midway, Ranger, Nimitz (Size: 5)"
@@ -101,14 +109,14 @@ class Game
     puts "Submarines: Tang, Thresher, Silversides, Flasher, Seahorse, Ohio (Size: 2)"
     puts " "
     if @player_ships != []
-    puts "Current Ships:"
+      print "Current Ships: "
     @player_ships.each {|ship| print "#{ship.name}, "}
     end
     puts ""
     puts ""
     puts "Enter the name of our ship."
     print "> "
-    new_ship_name = gets.chomp.to_s
+    new_ship_name = gets.chomp.to_s.capitalize
 
     new_ship = false
     until new_ship
@@ -118,7 +126,7 @@ class Game
       else
         puts "Try naming it something else"
         print "> "
-        new_ship_name = gets.chomp.to_s
+        new_ship_name = gets.chomp.to_s.capitalize
       end
     end
 
@@ -126,7 +134,7 @@ class Game
       print "> "
       new_ship_size = gets.chomp.to_i
       new_ship_size_validation = false
-    until new_ship_size_validation == true
+    until new_ship_size_validation
       is_int = new_ship_size == [1..12]
       if is_int && (new_ship_size <= @width || new_ship_size <= @length)
         new_ship_size_validation = true
@@ -166,8 +174,6 @@ class Game
   end
 
 
-
-
   def player_place_ships
     until @player_ships == []
         system "clear"
@@ -202,6 +208,7 @@ class Game
     end
   end
 
+
   def computer_place_ships
     until @computer_ships == []
       ship_coordinates = ["A1", "B2", "C3"]
@@ -211,7 +218,6 @@ class Game
       @computer_board.place(@computer_ships.shift, ship_coordinates)
     end
   end
-
 
 
   def take_turn
@@ -249,8 +255,10 @@ class Game
     end
     system "clear"
     puts "Comrade, your shot at #{player_shot} #{shot_result}!"
+    puts "========================================"
     computer_take_turn
   end
+
 
   def computer_take_turn
     good_shot = false
