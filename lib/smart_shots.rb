@@ -10,7 +10,6 @@ class SmartShots
     @length = board.board_length
     @small_dim = [@width, @length].min
     @cells = board.cells
-    @oriented = "?"
     @hits = []
   end
 
@@ -19,17 +18,18 @@ class SmartShots
     @next_targs = []
     @best_targs = []
     @consec_hits = []
+    @oriented = "?"
     identify_hits
     vertical_check
     horizontal_check
     if @hits != []
-      check_for_consecutive_hits
+      check_for_consecutive_hits()
       if @consec_hits != []
         check_best_targs()
         return @best_targs.compact
       else
       return @next_targs.compact
-    end
+      end
     end
   end
 
