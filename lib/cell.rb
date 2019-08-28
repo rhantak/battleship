@@ -1,5 +1,4 @@
 require './lib/ship.rb'
-require 'pry'
 class Cell
   attr_reader :ship, :coordinate
 

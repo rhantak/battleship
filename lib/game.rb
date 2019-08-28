@@ -2,7 +2,6 @@ require './lib/ship'
 require './lib/cell'
 require './lib/board'
 require './lib/smart_shots'
-require 'pry'
 require 'colorize'
 
 class Game
@@ -49,7 +48,6 @@ class Game
     player_place_ships
     system "clear"
     is_game_over?
-
   end
 
   def is_game_over?
