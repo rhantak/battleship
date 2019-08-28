@@ -24,12 +24,14 @@ class SmartShots
     horizontal_check
     if @hits != []
       check_for_consecutive_hits
-      if @consec_hits != []
-        check_best_targs()
-        return @best_targs.compact
-      else
-        return @next_targs.compact
-      end
+    end
+    if @consec_hits != []
+      check_best_targs()
+    end
+    if @best_targs.compact != []
+      return @best_targs
+    else
+      return @next_targs
     end
   end
 
