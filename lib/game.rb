@@ -116,10 +116,8 @@ class Game
     puts "Submarines: Tang, Thresher, Silversides, Flasher, Seahorse, Ohio (Size: 2)"
     puts " "
     if @player_ships != []
-      print "Current Ships: "
-    @player_ships.each {|ship| print "#{ship.name}, "}
+    list_ships
     end
-    puts ""
     puts ""
     puts "Enter the name of our ship."
     print "> "
@@ -195,7 +193,9 @@ class Game
         system "clear"
         puts "Your enemy has maneuvered their ships within firing range."
         puts "You now need to position your fleet."
-        puts "The #{@player_ships[0].name} is #{@player_ships[0].length} spaces long."
+        list_ships
+        puts " "
+        puts "Your first ship is #{@player_ships[0].name}, it is #{@player_ships[0].length} spaces long."
         puts " "
         print @player_board.render_board(true)
         puts " "
