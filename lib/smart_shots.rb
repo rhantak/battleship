@@ -8,7 +8,6 @@ class SmartShots
     @board = board
     @width = board.board_width
     @length = board.board_length
-    @small_dim = [@width, @length].min
     @cells = board.cells
     @hits = []
   end
@@ -20,9 +19,9 @@ class SmartShots
     @consec_hits = []
     @oriented = "?"
     identify_hits
-    vertical_check
-    horizontal_check
     if @hits != []
+      vertical_check()
+      horizontal_check()
       check_for_consecutive_hits()
       if @consec_hits != []
         check_best_targs()
@@ -55,21 +54,20 @@ class SmartShots
       right_num = number + 1
       left_coord = letter + "#{left_num}"
       right_coord = letter + "#{right_num}"
-      if  (1..@small_dim).include?(left_num) && (1..@small_dim).include?(right_num)
-       @next_targs << left_coord
-       @next_targs << right_coord
-     elsif (1..@small_dim).include?(left_num)
-       @next_targs << left_coord
-     elsif (1..@small_dim).include?(right_num)
-       @next_targs << right_coord
-     end
+      if (1..@width).include?(left_num) && (1..@width).include?(right_num)
+        @next_targs << left_coord
+        @next_targs << right_coord
+      elsif (1..@width).include?(left_num)
+        @next_targs << left_coord
+      elsif (1..@width).include?(right_num)
+        @next_targs << right_coord
       end
     end
   end
 
   def vertical_check
     @hits.map do |hit|
-      max_letter = (@length.ord.to_i + 64).chr
+      max_letter = (@length + 64).chr
       # Separate the letter from the hit and make it an orinal value so we can move one above and one below
       letter = hit[0].ord
       # Separate the number from the hit
@@ -86,7 +84,6 @@ class SmartShots
       elsif ("A"..max_letter).include?(below_coord[0])
         @next_targs << below_coord
       end
-
     end
   end
 
@@ -94,7 +91,7 @@ class SmartShots
     # Consecutive hits in a row or column are much better odds, so let's identify them
     @hits.each do |coord|
       # If a coordinate is both a hit and a next target, it is consecutive with another hit
-      if @next_targs.include?(coord) && @board.cells[coord].render == "H"
+      if @next_targs.include?(coord) && @board.cells[coord].render == "H".colorize(:red).bold
         @consec_hits << coord
       end
     end
@@ -131,4 +128,5 @@ class SmartShots
       @best_targs << (letter1 + 1).chr + number
     end
     @best_targs
+  end
 end
