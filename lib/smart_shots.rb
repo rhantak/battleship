@@ -22,7 +22,7 @@ class SmartShots
     if @hits != []
       vertical_check()
       horizontal_check()
-      check_for_consecutive_hits()
+      # check_for_consecutive_hits()
       if @consec_hits != []
         check_best_targs()
         return @best_targs.compact
@@ -35,7 +35,7 @@ class SmartShots
   def identify_hits
     # Checks all cell.render for "H" which is a hit, but not sunk, ship
     @cells.map do |coord, cell|
-      if @cells[coord].render == 'H'.colorize(:red).bold
+      if @cells[coord].render == 'H'.colorize(:yellow).bold
       @hits << coord
       end
     end
@@ -87,26 +87,26 @@ class SmartShots
     end
   end
 
-  def check_for_consecutive_hits
-    # Consecutive hits in a row or column are much better odds, so let's identify them
-    @hits.each do |coord|
-      # If a coordinate is both a hit and a next target, it is consecutive with another hit
-      if @next_targs.include?(coord) && @board.cells[coord].render == "H".colorize(:red).bold
-        @consec_hits << coord
-      end
-    end
-    @letters1 = []
-    @consec_hits.each do |coord|
-      @letters1 << coord[0]
-    end
-    # If letters are the same, it's in a row
-    if @letters1.uniq.size == 1
-      @oriented = "h"
-    # Otherwise it's in a column
-    else
-      @oriented = "v"
-    end
-  end
+  # def check_for_consecutive_hits
+  #   # Consecutive hits in a row or column are much better odds, so let's identify them
+  #   @hits.each do |coord|
+  #     # If a coordinate is both a hit and a next target, it is consecutive with another hit
+  #     if @next_targs.include?(coord) && @board.cells[coord].render == "H"
+  #       @consec_hits << coord
+  #     end
+  #   end
+  #   @letters1 = []
+  #   @consec_hits.each do |coord|
+  #     @letters1 << coord[0]
+  #   end
+  #   # If letters are the same, it's in a row
+  #   if @letters1.uniq.size == 1
+  #     @oriented = "h"
+  #   # Otherwise it's in a column
+  #   else
+  #     @oriented = "v"
+  #   end
+  # end
 
   def check_best_targs
     if @oriented == "h"

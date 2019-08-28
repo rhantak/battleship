@@ -294,7 +294,7 @@ class Game
     shot_result = nil
     if @computer_board.cells[player_shot].render == "M".colorize(:cyan).bold
       shot_result = "was a miss"
-    elsif @computer_board.cells[player_shot].render == "H".colorize(:red).bold
+    elsif @computer_board.cells[player_shot].render == "H".colorize(:yellow).bold
       shot_result = "was a hit"
     elsif @computer_board.cells[player_shot].render == "X".colorize(:red).bold
       shot_result = "sunk the enemy's #{@computer_board.cells[player_shot].ship.name}"
@@ -324,7 +324,7 @@ class Game
     shot_result = nil
     if @player_board.cells[computer_shot[0]].render == "M".colorize(:cyan).bold
       shot_result = "was a miss"
-    elsif @player_board.cells[computer_shot[0]].render == "H".colorize(:red).bold
+    elsif @player_board.cells[computer_shot[0]].render == "H".colorize(:yellow).bold
       shot_result = "was a hit"
     elsif @player_board.cells[computer_shot[0]].render == "X".colorize(:red).bold
       shot_result = "sunk your #{@player_board.cells[computer_shot[0]].ship.name}"

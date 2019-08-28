@@ -41,7 +41,7 @@ class Cell
          'M'.colorize(:cyan).bold
       else
         if @ship.health > 0
-           'H'.colorize(:red).bold
+           'H'.colorize(:yellow).bold
         elsif @ship.health <= 0
            'X'.colorize(:red).bold
         end
