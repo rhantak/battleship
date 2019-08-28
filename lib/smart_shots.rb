@@ -36,7 +36,7 @@ class SmartShots
   def identify_hits
     # Checks all cell.render for "H" which is a hit, but not sunk, ship
     @cells.map do |coord, cell|
-      if @cells[coord].render == 'H'.colorize(:red).bold
+      if @cells[coord].render == 'H'.colorize(:yellow).bold
       @hits << coord
       end
     end
