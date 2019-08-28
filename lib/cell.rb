@@ -1,4 +1,7 @@
 require './lib/ship.rb'
+require 'pry'
+require 'colorize'
+
 class Cell
   attr_reader :ship, :coordinate
 
@@ -30,18 +33,18 @@ class Cell
   def render(show = false)
     if @fired_upon == false
       if show == true && !empty?
-         'S'
+         'S'.colorize(:green).bold
       else
-         '.'
+         '.'.colorize(:green).bold
       end
     elsif @fired_upon == true
       if empty?
-         'M'
+         'M'.colorize(:cyan).bold
       else
         if @ship.health > 0
-           'H'
+           'H'.colorize(:red).bold
         elsif @ship.health <= 0
-           'X'
+           'X'.colorize(:red).bold
         end
       end
     end

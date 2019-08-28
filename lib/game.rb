@@ -149,7 +149,7 @@ class Game
         puts "You have to select a number that fits on the board."
         puts "How large should your ship be?"
         print "> "
-        new_ship_size = gets.chomp
+        new_ship_size = gets.chomp.to_i
       end
     end
     player_ship = Ship.new(new_ship_name, new_ship_size)
@@ -161,10 +161,19 @@ class Game
     player_create_more_ships
   end
 
+  def list_ships
+    puts "Your current ships are:"
+    puts " "
+  @player_ships.each do |ship|
+    puts "USS #{ship.name}, #{ship.length} squares long."
+    end
+  end
 
   def player_create_more_ships
     system "clear"
     puts "Would you like to add another ship to the fleet?"
+    list_ships
+    puts " "
     puts "Enter y for Yes."
     puts "Enter n for No."
     player_choice = gets.chomp.downcase
@@ -252,11 +261,11 @@ class Game
     end
 
     shot_result = nil
-    if @computer_board.cells[player_shot].render == "M"
+    if @computer_board.cells[player_shot].render == "M".colorize(:cyan).bold
       shot_result = "was a miss"
-    elsif @computer_board.cells[player_shot].render == "H"
+    elsif @computer_board.cells[player_shot].render == "H".colorize(:red).bold
       shot_result = "was a hit"
-    elsif @computer_board.cells[player_shot].render == "X"
+    elsif @computer_board.cells[player_shot].render == "X".colorize(:red).bold
       shot_result = "sunk the enemy's #{@computer_board.cells[player_shot].ship.name}"
       @computer_ships_in_play -= 1
     end
@@ -282,11 +291,11 @@ class Game
       end
     end
     shot_result = nil
-    if @player_board.cells[computer_shot[0]].render == "M"
+    if @player_board.cells[computer_shot[0]].render == "M".colorize(:cyan).bold
       shot_result = "was a miss"
-    elsif @player_board.cells[computer_shot[0]].render == "H"
+    elsif @player_board.cells[computer_shot[0]].render == "H".colorize(:red).bold
       shot_result = "was a hit"
-    elsif @player_board.cells[computer_shot[0]].render == "X"
+    elsif @player_board.cells[computer_shot[0]].render == "X".colorize(:red).bold
       shot_result = "sunk your #{@player_board.cells[computer_shot[0]].ship.name}"
       @player_ships_in_play -= 1
     end
