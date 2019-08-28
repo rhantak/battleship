@@ -199,6 +199,7 @@ class Game
         puts " "
         print @player_board.render_board(true)
         puts " "
+        puts " "
         puts "Enter the squares for the USS #{@player_ships[0].name} (#{@player_ships[0].length} spaces) separated by spaces"
         puts "Example: A1 A2 A3"
 
