@@ -150,7 +150,7 @@ class Game
         puts "You have to select a number that fits on the board."
         puts "How large should your ship be?"
         print "> "
-        new_ship_size = gets.chomp
+        new_ship_size = gets.chomp.to_i
       end
     end
     player_ship = Ship.new(new_ship_name, new_ship_size)
@@ -162,10 +162,19 @@ class Game
     player_create_more_ships
   end
 
+  def list_ships
+    puts "Your current ships are:"
+    puts " "
+  @player_ships.each do |ship|
+    puts "USS #{ship.name}, #{ship.length} squares long."
+    end
+  end
 
   def player_create_more_ships
     system "clear"
     puts "Would you like to add another ship to the fleet?"
+    list_ships
+    puts " "
     puts "Enter y for Yes."
     puts "Enter n for No."
     player_choice = gets.chomp.downcase
