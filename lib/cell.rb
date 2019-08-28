@@ -1,5 +1,4 @@
 require './lib/ship.rb'
-require 'pry'
 require 'colorize'
 
 class Cell
