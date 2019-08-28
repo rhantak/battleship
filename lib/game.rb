@@ -31,7 +31,7 @@ class Game
         elsif initial_input.downcase == "q"
           valid_input = true
           quit = "q"
-          return "Thanks for playing!"
+          puts "Thanks for playing!"
         else p "That was not a valid input. Enter 'p' to play. Enter 'q' to quit."
         end
       end
