@@ -1,13 +1,14 @@
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
-require 'pry'
 
 class Board
-  attr_reader :cells
+  attr_reader :cells, :board_width, :board_length
 
   def initialize(width, length)
     @cells = {}
+    @board_width = width
+    @board_length = length
     length_letter = (64+length.to_i).chr
 
     letters = Range.new("A", length_letter).to_a

@@ -8,7 +8,7 @@ require 'minitest/pride'
 class GameTest < Minitest::Test
 
   def setup
-    @board = Board.new
+    @board = Board.new(4,4)
     @game = Game.new(@board)
   end
 
