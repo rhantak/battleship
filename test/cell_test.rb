@@ -58,26 +58,26 @@ class CellTest < Minitest::Test
   def test_render_doesnt_show_ship
     @cell.place_ship(@cruiser)
 
-    assert_equal ".", @cell.render
+    assert_equal ".".colorize(:green).bold, @cell.render
   end
 
   def test_render_shows_ship
     @cell.place_ship(@cruiser)
 
-    assert_equal "S", @cell.render(true)
+    assert_equal "S".colorize(:green).bold, @cell.render(true)
   end
 
   def test_render_shows_miss
     @cell.fire_upon
 
-    assert_equal "M", @cell.render
+    assert_equal 'M'.colorize(:cyan).bold, @cell.render
   end
 
   def test_render_shows_hit
     @cell.place_ship(@cruiser)
     @cell.fire_upon
 
-    assert_equal "H", @cell.render
+    assert_equal 'H'.colorize(:yellow).bold, @cell.render
   end
 
   def test_render_shows_sunk
@@ -86,7 +86,7 @@ class CellTest < Minitest::Test
     @cell.fire_upon
     @cell.fire_upon
 
-    assert_equal "X", @cell.render
+    assert_equal 'X'.colorize(:red).bold, @cell.render
   end
 
 end
