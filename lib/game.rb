@@ -31,7 +31,7 @@ class Game
         elsif initial_input.downcase == "q"
           valid_input = true
           quit = "q"
-          return "Thanks for playing!"
+          puts "Thanks for playing!"
         else p "That was not a valid input. Enter 'p' to play. Enter 'q' to quit."
         end
       end
@@ -86,6 +86,8 @@ class Game
         puts "==============PLAYER BOARD=============="
         puts @player_board.render_board(true)
         puts " "
+        puts " "
+        fleet_status
       end
     end
   end
@@ -167,6 +169,28 @@ class Game
     end
   end
 
+  def fleet_status
+    fleet = []
+    @player_board.cells.each do |coord, cell|
+        if cell.ship != nil
+          fleet << cell.ship
+        end
+        fleet = fleet.uniq
+      end
+
+    puts " "
+    puts "Your fleet:"
+      fleet.each do |ship|
+        if ship.length == ship.health
+          puts "USS #{ship.name}, #{ship.health} health remaining. Systems nominal.".colorize(:green)
+        elsif ship.length >= ship.health && ship.health > 0
+          puts "USS #{ship.name}, #{ship.health} health remaining. We're taking on water!".colorize(:yellow)
+        elsif ship.health <= 0
+          puts "USS #{ship.name}, mayday... mayday... we're going down. Deploy Liferafts!".colorize(:red)
+        end
+      end
+  end
+
   def player_create_more_ships
     system "clear"
     puts "Would you like to add another ship to the fleet?"
@@ -238,14 +262,20 @@ class Game
 
 
   def take_turn
-    puts "=============COMPUTER BOARD============="
+    puts "=============COMPUTER BOARD=============\n"
+    puts " "
     print @computer_board.render_board
     puts " "
-    puts "==============PLAYER BOARD=============="
+    puts " "
+    puts "==============PLAYER BOARD==============\n"
+    puts " "
     print @player_board.render_board(true)
     puts " "
-    puts "============Battle Stations!============"
-
+    puts " "
+    puts "============Battle Stations!============\n"
+    puts " "
+    fleet_status
+    puts " "
     puts "Comrade, enemy ships detected. Where should we fire?"
     print "Enter your firing coordinate: "
     good_shot = false
