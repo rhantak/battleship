@@ -25,7 +25,7 @@ class SmartShots
     if @hits != []
       check_for_consecutive_hits
       if @consec_hits != []
-        check_best_targs
+        check_best_targs()
         return @best_targs.compact
       else
         return @next_targs.compact
@@ -36,7 +36,7 @@ class SmartShots
   def identify_hits
     # Checks all cell.render for "H" which is a hit, but not sunk, ship
     @cells.map do |coord, cell|
-      if @cells[coord].render == "H"
+      if @cells[coord].render == 'H'.colorize(:red).bold
       @hits << coord
       end
     end
