@@ -195,7 +195,7 @@ class Game
         puts "You now need to position your fleet."
         list_ships
         puts " "
-        puts "Your first ship is #{@player_ships[0].name}, it is #{@player_ships[0].length} spaces long."
+        puts "You must place the USS #{@player_ships[0].name}, it is #{@player_ships[0].length} spaces long."
         puts " "
         print @player_board.render_board(true)
         puts " "
