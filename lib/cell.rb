@@ -11,6 +11,8 @@ class Cell
   end
 
   def empty?
+    #better to put
+    #@ship.nil?
     @ship == nil
   end
 
@@ -36,12 +38,14 @@ class Cell
       else
          '.'.colorize(:green).bold
       end
+      #could be an else because there are only two possible conditions.
     elsif @fired_upon == true
       if empty?
          'M'.colorize(:cyan).bold
       else
         if @ship.health > 0
            'H'.colorize(:yellow).bold
+           #ship.sunk is better than health <= 0
         elsif @ship.health <= 0
            'X'.colorize(:red).bold
         end

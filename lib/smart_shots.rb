@@ -19,6 +19,7 @@ class SmartShots
     @consec_hits = []
     @oriented = "?"
     identify_hits
+    # unless hits.empty?
     if @hits != []
       vertical_check()
       horizontal_check()
@@ -27,7 +28,7 @@ class SmartShots
         check_best_targs()
         return @best_targs.compact
       else
-      return @next_targs.compact
+        return @next_targs.compact
       end
     end
   end

@@ -131,6 +131,7 @@ class Game
         new_ship_name.length >= 3
         new_ship = true
       else
+        # Tell them why it wasn't accepted
         puts "Try naming it something else"
         print "> "
         new_ship_name = gets.chomp.to_s.capitalize
@@ -172,9 +173,9 @@ class Game
   def fleet_status
     fleet = []
     @player_board.cells.each do |coord, cell|
-        if cell.ship != nil
-          fleet << cell.ship
-        end
+      if cell.ship != nil
+        fleet << cell.ship
+      end
         fleet = fleet.uniq
       end
 
