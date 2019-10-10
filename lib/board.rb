@@ -1,6 +1,7 @@
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
+require 'pry'
 
 class Board
   attr_reader :cells, :board_width, :board_length
@@ -31,12 +32,14 @@ class Board
   def ship_is_placed_in_a_straight_line?(ship, array)
     letters = array.map {|coordinate| coordinate[0]}
     numbers = array.map {|coordinate| coordinate[1]}
-    yrange = Range.new(letters.sort.first,letters.sort.last).count
+    yrange = Range.new(letters.sort.first, letters.sort.last).count
+    xrange = Range.new(numbers.sort.first, numbers.sort.last).count
+
     # Passed in array is horizontally consecutive and all letters are the same (placed on same row)
-    if @cells.keys.each_cons(ship.length).any? {|a| a == array} && letters.uniq.count == 1
+    if letters.uniq.count == 1 && xrange == ship.length
       true
     # Passed in array is vertically consecutive and all numbers are the same (placed in same column)
-    elsif (numbers.uniq.count == 1) && (yrange == ship.length)
+    elsif numbers.uniq.count == 1 && yrange == ship.length
       true
     else
       false
