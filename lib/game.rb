@@ -7,7 +7,6 @@ require 'colorize'
 class Game
   attr_reader :player_board, :computer_board, :player_ships_in_play, :computer_ships_in_play
 
-
   def initialize
     system "clear"
     @player_ships = []
@@ -117,9 +116,9 @@ class Game
     puts "Cruisers & Destroyers: Ticonderoga, Fitzgerald, John McCain, Cole, Kidd (Size: 3)"
     puts "Submarines: Tang, Thresher, Silversides, Flasher, Seahorse, Ohio (Size: 2)"
     puts " "
-    if @player_ships != []
-    list_ships
-    end
+
+    list_ships if @player_ships != []
+
     puts ""
     puts "Enter the name of our ship."
     print "> "
@@ -177,19 +176,19 @@ class Game
         fleet << cell.ship
       end
         fleet = fleet.uniq
-      end
+    end
 
     puts " "
     puts "Your fleet:"
-      fleet.each do |ship|
-        if ship.length == ship.health
-          puts "USS #{ship.name}, #{ship.health} health remaining. Systems nominal.".colorize(:green)
-        elsif ship.length >= ship.health && ship.health > 0
-          puts "USS #{ship.name}, #{ship.health} health remaining. We're taking on water!".colorize(:yellow)
-        elsif ship.health <= 0
-          puts "USS #{ship.name}, mayday... mayday... we're going down. Deploy Liferafts!".colorize(:red)
-        end
+    fleet.each do |ship|
+      if ship.length == ship.health
+        puts "USS #{ship.name}, #{ship.health} health remaining. Systems nominal.".colorize(:green)
+      elsif ship.length >= ship.health && ship.health > 0
+        puts "USS #{ship.name}, #{ship.health} health remaining. We're taking on water!".colorize(:yellow)
+      elsif ship.health <= 0
+        puts "USS #{ship.name}, mayday... mayday... we're going down. Deploy Liferafts!".colorize(:red)
       end
+    end
   end
 
   def player_create_more_ships
