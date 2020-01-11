@@ -1,6 +1,8 @@
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
+require 'colorize'
+
 require 'minitest/autorun'
 require 'minitest/pride'
 
@@ -51,7 +53,13 @@ class BoardTest < Minitest::Test
     @board.place(@cruiser, ["A1", "A2", "A3"])
     @board.place(@submarine, ["B1", "B2"])
 
-    assert_equal "        1   2   3   4\n    A   .   .   .   .\n    B   .   .   .   .\n    C   .   .   .   .\n    D   .   .   .   .\n", @board.render_board
+    expected = "       1   2   3   4 \n\n" +
+               " A     .   .   .   . \n\n" +
+               " B     .   .   .   . \n\n" +
+               " C     .   .   .   . \n\n" +
+               " D     .   .   .   ."
+               
+    assert_equal expected, @board.render_board
   end
 
   def test_will_render_and_show_ships
