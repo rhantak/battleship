@@ -36,7 +36,7 @@ class Cell
       if show == true && !empty?
          'S'.colorize(:green).bold
       else
-         '.'.colorize(:green).bold
+         '.'
       end
       #could be an else because there are only two possible conditions.
     elsif @fired_upon == true
